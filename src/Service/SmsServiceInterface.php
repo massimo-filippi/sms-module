@@ -11,7 +11,6 @@ interface SmsServiceInterface
     /**
      * @param string $to
      * @param string $text
-     * @param string $from
      */
-    public function sendSMS($to, $text, $from);
+    public function sendSMS($to, $text);
 }

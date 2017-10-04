@@ -31,10 +31,10 @@ class SmsService implements SmsServiceInterface
     /**
      * @param string $to
      * @param string $text
-     * @param string $from
+     * @param string $sender
      * @return SMSApi\Api\Response\StatusResponse
      */
-    public function sendSMS($to, $text, $from)
+    public function sendSMS($to, $text, $sender = 'Info')
     {
         try {
 
@@ -50,12 +50,12 @@ class SmsService implements SmsServiceInterface
             $actionSend->setText((string)$text);
 
             // Set the sender's name. Name has to be set in panel first.
-            $actionSend->setSender((string)$from);
+            $actionSend->setSender((string)$sender);
 
             return $actionSend->execute();
 
         } catch (SMSApi\Exception\SmsapiException $e) {
-            throw new RuntimeException('ERROR: ' . $e->getMessage(), $e->getCode(), $e);
+            throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
     }
 }
