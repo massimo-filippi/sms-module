@@ -1,0 +1,8 @@
+{
+  "name": "massimo-filippi/sms-module",
+  "description": "ZF3 module for SMS communication",
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {}
+}
