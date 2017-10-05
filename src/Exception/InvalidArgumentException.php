@@ -1,10 +1,10 @@
 <?php
 
-namespace MassimoFilippi\SmsModule\Service\Exception;
+namespace MassimoFilippi\SmsModule\Exception;
 
 /**
  * Class InvalidArgumentException
- * @package MassimoFilippi\SmsModule\Service\Exception
+ * @package MassimoFilippi\SmsModule\Exception
  */
 class InvalidArgumentException extends \InvalidArgumentException
 {
