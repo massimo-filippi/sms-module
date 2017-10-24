@@ -26,16 +26,16 @@ class SmsApiComAdapterFactory implements FactoryInterface
         /** @var array $config */
         $config = $container->get('Config');
 
-        if (false === isset($config['massimo_filippi']['sms_module']['adapter_options']['api_username'])) {
+        if (false === isset($config['massimo_filippi']['sms_module']['adapter_params']['api_username'])) {
             throw new ServiceNotCreatedException('Missing adapter parameter: "api_username".');
         }
 
-        if (false === isset($config['massimo_filippi']['sms_module']['adapter_options']['api_password_hash'])) {
+        if (false === isset($config['massimo_filippi']['sms_module']['adapter_params']['api_password_hash'])) {
             throw new ServiceNotCreatedException('Missing adapter parameter: "api_password_hash".');
         }
 
-        $apiUsername = $config['massimo_filippi']['sms_module']['adapter_options']['api_username'];
-        $apiPasswordHash = $config['massimo_filippi']['sms_module']['adapter_options']['api_password_hash'];
+        $apiUsername = $config['massimo_filippi']['sms_module']['adapter_params']['api_username'];
+        $apiPasswordHash = $config['massimo_filippi']['sms_module']['adapter_params']['api_password_hash'];
 
         return new SmsApiComAdapter($apiUsername, $apiPasswordHash);
     }
