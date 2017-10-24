@@ -3,10 +3,10 @@
 namespace MassimoFilippi\SmsModule\Message;
 
 /**
- * Interface SmsMessageInterface
+ * Interface MessageInterface
  * @package MassimoFilippi\SmsModule\Message
  */
-interface SmsMessageInterface
+interface MessageInterface
 {
     /**
      * @param string $to
