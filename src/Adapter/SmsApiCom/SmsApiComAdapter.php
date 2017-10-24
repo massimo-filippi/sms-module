@@ -1,18 +1,18 @@
 <?php
 
-namespace MassimoFilippi\SmsModule\ServiceProvider;
+namespace MassimoFilippi\SmsModule\Adapter\SmsApiCom;
 
+use MassimoFilippi\SmsModule\Adapter\AdapterInterface;
 use MassimoFilippi\SmsModule\Exception\RuntimeException;
-use MassimoFilippi\SmsModule\Message\SmsMessageInterface;
+use MassimoFilippi\SmsModule\Message\MessageInterface;
 use SMSApi;
 
 /**
- * Class SMSApiProvider
- * @package MassimoFilippi\SmsModule\ServiceProvider
+ * Class SmsApiComAdapter
+ * @package MassimoFilippi\SmsModule\Adapter\SmsApiCom
  */
-class SMSApiProvider implements SmsServiceProviderInterface
+class SmsApiComAdapter implements AdapterInterface
 {
-
     /**
      * @var SMSApi\Client
      */
@@ -40,23 +40,22 @@ class SMSApiProvider implements SmsServiceProviderInterface
     }
 
     /**
-     * @param SmsMessageInterface $smsMessage
+     * @param MessageInterface $message
      * @return SMSApi\Api\Response\StatusResponse
      */
-    public function sendSMS(SmsMessageInterface $smsMessage)
+    public function sendSms(MessageInterface $message)
     {
         try {
-
             $smsapi = new SMSApi\Api\SmsFactory();
             $smsapi->setClient($this->client);
 
             $actionSend = $smsapi->actionSend();
 
             // Set the recipient's number in the form 48xxxxxxxxx or xxxxxxxxx.
-            $actionSend->setTo($smsMessage->getTo());
+            $actionSend->setTo($message->getTo());
 
             // Set the sender's text.
-            $actionSend->setText($smsMessage->getText());
+            $actionSend->setText($message->getText());
 
             // Set the sender's name. Name has to be set in panel first.
             $actionSend->setSender($this->sender);

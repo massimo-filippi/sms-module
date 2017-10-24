@@ -3,10 +3,10 @@
 namespace MassimoFilippi\SmsModule\Message;
 
 /**
- * Class SmsMessage
+ * Class Message
  * @package MassimoFilippi\SmsModule\Message
  */
-class SmsMessage implements SmsMessageInterface
+class Message implements MessageInterface
 {
     /**
      * @var string
@@ -23,7 +23,7 @@ class SmsMessage implements SmsMessageInterface
      */
     public function setTo($to)
     {
-        $this->to = $to;
+        $this->to = (string)$to;
     }
 
     /**
@@ -39,7 +39,7 @@ class SmsMessage implements SmsMessageInterface
      */
     public function setText($text)
     {
-        $this->text = $text;
+        $this->text = (string)$text;
     }
 
     /**

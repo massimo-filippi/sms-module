@@ -34,11 +34,6 @@ In case it does not, you can enable module manually by adding value `'MassimoFil
 ```php
 <?php
 
-/**
- * List of enabled modules for this application.
- *
- * This should be an array of module namespaces used in the application.
- */
 return [
     'Zend\Router',
     'Zend\Validator',
@@ -57,31 +52,19 @@ Here is what I have in my `config/autoload/local.php` file.
 
 ```php
 <?php
-/**
- * Local Configuration Override
- *
- * This configuration override file is for overriding environment-specific and
- * security-sensitive configuration information. Copy this file without the
- * .dist extension at the end and populate values as needed.
- *
- * @NOTE: This file is ignored from Git by default with the .gitignore included
- * in ZendSkeletonApplication. This is a good practice, as it prevents sensitive
- * credentials from accidentally being committed into version control.
- */
-
-use MassimoFilippi\SmsModule\ServiceProvider\SMSApiProvider;
 
 return [
     'massimo_filippi' => [
         'sms_module' => [
-            'type' => SMSApiProvider::class, // Type of the provider we want to use.
-            'params' => [ // Some params needed to create chosen provider.
+            'adapter' => \MassimoFilippi\SmsModule\Adapter\SmsApiCom\SmsApiComAdapter::class,
+            'adapter_params' => [
                 'api_username' => 'john.doe',
                 'api_password_hash' => '1234567890', // MD5 hash of password in case of SMSApi
             ],
         ],
     ],
 ];
+
 ```
 
 ## Usage
@@ -91,7 +74,7 @@ Somewhere in business logic classes.
 ```php
 <?php 
 
-use MassimoFilippi\SmsModule\Message\SmsMessage;
+use MassimoFilippi\SmsModule\Message\Message as SmsMessage;
 
 $smsMessage = new SmsMessage();
 
