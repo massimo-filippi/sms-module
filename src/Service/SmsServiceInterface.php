@@ -2,7 +2,7 @@
 
 namespace MassimoFilippi\SmsModule\Service;
 
-use MassimoFilippi\SmsModule\Message\SmsMessageInterface;
+use MassimoFilippi\SmsModule\Message\MessageInterface;
 
 /**
  * Interface SmsServiceInterface
@@ -11,7 +11,7 @@ use MassimoFilippi\SmsModule\Message\SmsMessageInterface;
 interface SmsServiceInterface
 {
     /**
-     * @param SmsMessageInterface $smsMessage
+     * @param MessageInterface $smsMessage
      */
-    public function sendSMS(SmsMessageInterface $smsMessage);
+    public function sendSMS(MessageInterface $smsMessage);
 }

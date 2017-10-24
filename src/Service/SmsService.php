@@ -2,8 +2,8 @@
 
 namespace MassimoFilippi\SmsModule\Service;
 
-use MassimoFilippi\SmsModule\Message\SmsMessageInterface;
-use MassimoFilippi\SmsModule\ServiceProvider\SmsServiceProviderInterface;
+use MassimoFilippi\SmsModule\Adapter\AdapterInterface;
+use MassimoFilippi\SmsModule\Message\MessageInterface;
 
 /**
  * Class SmsService
@@ -12,24 +12,24 @@ use MassimoFilippi\SmsModule\ServiceProvider\SmsServiceProviderInterface;
 class SmsService implements SmsServiceInterface
 {
     /**
-     * @var SmsServiceProviderInterface
+     * @var AdapterInterface
      */
-    private $smsServiceProvider;
+    private $adapter;
 
     /**
      * SmsService constructor.
-     * @param SmsServiceProviderInterface $smsServiceProvider
+     * @param AdapterInterface $adapter
      */
-    public function __construct(SmsServiceProviderInterface $smsServiceProvider)
+    public function __construct(AdapterInterface $adapter)
     {
-        $this->smsServiceProvider = $smsServiceProvider;
+        $this->adapter = $adapter;
     }
 
     /**
-     * @param SmsMessageInterface $smsMessage
+     * @param MessageInterface $smsMessage
      */
-    public function sendSMS(SmsMessageInterface $smsMessage)
+    public function sendSMS(MessageInterface $smsMessage)
     {
-        return $this->smsServiceProvider->sendSMS($smsMessage);
+        return $this->adapter->sendSMS($smsMessage);
     }
 }
