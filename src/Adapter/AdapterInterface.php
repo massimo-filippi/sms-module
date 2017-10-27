@@ -12,6 +12,7 @@ interface AdapterInterface
 {
     /**
      * @param MessageInterface $message
+     * @param bool $validateNumberBeforeSending
      */
-    public function sendSms(MessageInterface $message);
+    public function sendSms(MessageInterface $message, $validateNumberBeforeSending = false);
 }

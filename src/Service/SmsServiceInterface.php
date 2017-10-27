@@ -12,6 +12,8 @@ interface SmsServiceInterface
 {
     /**
      * @param MessageInterface $smsMessage
+     * @param bool $validateNumberBeforeSending
+     * @return mixed
      */
-    public function sendSMS(MessageInterface $smsMessage);
+    public function sendSMS(MessageInterface $smsMessage, $validateNumberBeforeSending = false);
 }

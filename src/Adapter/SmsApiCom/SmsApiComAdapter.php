@@ -23,6 +23,8 @@ class SmsApiComAdapter implements AdapterInterface
      */
     private $sender = 'Info';
 
+    //-------------------------------------------------------------------------
+
     /**
      * SMSApiProvider constructor.
      * @param string $apiUsername
@@ -39,15 +41,22 @@ class SmsApiComAdapter implements AdapterInterface
         }
     }
 
+    //-------------------------------------------------------------------------
+
     /**
      * @param MessageInterface $message
-     * @return SMSApi\Api\Response\StatusResponse
+     * @param bool $validateNumberBeforeSending
+     * @return bool
      */
-    public function sendSms(MessageInterface $message)
+    public function sendSms(MessageInterface $message, $validateNumberBeforeSending = false)
     {
         try {
             $smsapi = new SMSApi\Api\SmsFactory();
             $smsapi->setClient($this->client);
+
+            if ($validateNumberBeforeSending && !$this->isNumberValid($message->getTo())) {
+                return false;
+            }
 
             $actionSend = $smsapi->actionSend();
 
@@ -60,10 +69,45 @@ class SmsApiComAdapter implements AdapterInterface
             // Set the sender's name. Name has to be set in panel first.
             $actionSend->setSender($this->sender);
 
-            return $actionSend->execute();
+            // todo: needs work
+            $result = $actionSend->execute();
 
+            return true;
         } catch (SMSApi\Exception\SmsapiException $e) {
             throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
+    }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * @param $number
+     * @return bool
+     */
+    private function isNumberValid($number)
+    {
+        if (empty($number)) {
+            return false;
+        }
+
+        $requestUrl = 'https://api.smsapi.com/hlr.do';
+        $requestUrl .= '?username=' . $this->client->getUsername();
+        $requestUrl .= '&password=' . $this->client->getPassword();
+        $requestUrl .= '&number=' . $number;
+        $requestUrl .= '&format=json';
+
+        $responseJson = @file_get_contents($requestUrl);
+
+        if (false === $responseJson) {
+            return false;
+        }
+
+        $responseArray = @json_decode($responseJson, true);
+
+        if (null === $responseArray) {
+            return false;
+        }
+
+        return isset($responseArray['status']) && $responseArray['status'] === 'OK';
     }
 }
